@@ -1,0 +1,88 @@
+@using System.Globalization
+@using SharpAstrology.Enums
+
+
+<style>
+    .arc:hover{
+        fill: @HoverColor;
+    }
+</style>
+
+@foreach (var sign in Enum.GetValues<Zodiac>())
+{
+    <g transform=@($"rotate({-30 * (int)sign})") @onclick="() => OnClickCallback.InvokeAsync(sign)">
+        <!-- Zodiac Box : 0.85 is the distance from the center to the lower bound of the box-->
+        <path d="M @_outer 0
+                 A @_outer @_outer 0 0 0 @S(cos * RelativeOuterRadius) -@S(sin * RelativeOuterRadius)
+                 L @S(RelativeInnerRadius * cos) -@S(RelativeInnerRadius * sin)
+                 A @_inner @_inner 0 0 1 @_inner 0
+                 Z" class="arc" fill="transparent"/>
+        <!-- Sign Symbol -->
+        <g transform="translate(-@a -@a)
+                      rotate(75  @a @a)
+                      translate(0 -@S(RelativeInnerRadius + _signWidth / 2 + 0.03))">
+            <ZodiacSymbol Width="@S(_signWidth)" Height="@S(_signWidth)" Sign="@sign" Color="@SignColorMap[sign]"/>
+        </g>
+    </g>
+}
+
+
+@code{
+
+    private readonly double cos = 0.86602540378;
+    private readonly double sin = 0.5;
+    
+    private double _relativeInnerRadius;
+    [EditorRequired][Parameter] public double RelativeInnerRadius
+    {
+        get => _relativeInnerRadius;
+        set
+        {
+            _relativeInnerRadius = value;
+            _inner = S(_relativeInnerRadius);
+            _adeptParameters();
+        } 
+    }
+    private string _inner;
+
+    private double _relativeOuterRadius;
+    [EditorRequired][Parameter] public double RelativeOuterRadius
+    {
+        get => _relativeOuterRadius;
+        set
+        {
+            _relativeOuterRadius = value;
+            _outer = S(_relativeOuterRadius);
+            _adeptParameters();
+        }
+    }
+    private string _outer;
+    
+    [Parameter] public EventCallback<Zodiac> OnClickCallback { get; set; }
+    [Parameter] public string HoverColor { get; set; } = "yellow";
+    [Parameter] public Dictionary<Zodiac,string> SignColorMap { get; set; } = new()
+    {
+        [Zodiac.Aries] = "red",
+        [Zodiac.Taurus] = "green",
+        [Zodiac.Gemini] = "darkgoldenrod",
+        [Zodiac.Cancer] = "blue",
+        [Zodiac.Leo] = "red",
+        [Zodiac.Virgo] = "green",
+        [Zodiac.Libra] = "darkgoldenrod",
+        [Zodiac.Scorpio] = "blue",
+        [Zodiac.Sagittarius] = "red",
+        [Zodiac.Capricorn] = "green",
+        [Zodiac.Aquarius] = "darkgoldenrod",
+        [Zodiac.Pisces] = "blue"
+    };
+    
+    private double _signWidth;
+    private string a;
+    private void _adeptParameters()
+    {
+        _signWidth = RelativeOuterRadius - RelativeInnerRadius - 0.06;
+        a = S(_signWidth / 2);
+    }
+    private string S(double value) => value.ToString(CultureInfo.InvariantCulture);
+
+}

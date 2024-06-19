@@ -1,0 +1,39 @@
+@using System.Globalization
+@using SharpAstrology.Enums
+
+<style>
+    .planet:hover {
+        stroke: @HoverColor;
+    }    
+</style>
+
+<g class="planet" stroke="@Color" @onclick="()=>OnClickCallback.InvokeAsync(Planet)">
+    <g transform="translate(-0.04 -0.04)">
+        <PlanetSymbol Planet="@Planet" Color="@Color" 
+                      RelativeX="@S(ImagePositionX)" RelativeY="@S(ImagePositionY)"
+                      Width="0.08" Height="0.08" Class="planet" ShowRetrograde="ShowRetrograde"/>
+    </g>
+    <line x1="@S(LinePositionX * 0.85)"
+          y1="@S(LinePositionY * 0.85)" 
+          x2="@S(LinePositionX * 0.80)" 
+          y2="@S(LinePositionY * 0.80)" stroke-width="0.005" />
+    <line x1="@S(LinePositionX * 0.6)" 
+          y1="@S(LinePositionY * 0.6)" 
+          x2="@S(LinePositionX * 0.57)" 
+          y2="@S(LinePositionY * 0.57)" stroke-width="0.01" />
+</g>
+
+
+@code {
+    [Parameter] public EventCallback<Planets> OnClickCallback { get; set; }
+    [Parameter] public Planets Planet { get; set; }
+    [Parameter] public double ImagePositionX { get; set; }
+    [Parameter] public double ImagePositionY { get; set; }
+    [Parameter] public double LinePositionX { get; set; }
+    [Parameter] public double LinePositionY { get; set; }
+    [Parameter] public string Color { get; set; } = "black";
+    [Parameter] public bool ShowRetrograde { get; set; }
+    [Parameter] public string HoverColor { get; set; } = "yellow";
+
+    private string S(double value) => value.ToString(CultureInfo.InvariantCulture);
+}

@@ -1,0 +1,127 @@
+@using SharpAstrology.Enums
+
+<svg viewBox="0 0 1 1" fill="none" 
+     x="@RelativeX" 
+     y="@RelativeY"
+     stroke-width="@StrokeWidth" stroke="@Color" 
+     width="@Width"
+     height="@Height"
+     opacity="@Opacity"
+     style="pointer-events: none">
+@switch (Sign)
+{
+    case Zodiac.Aries:
+        <path d="M 0.1 0.3 C 0.2 -0.3  0.5 0.5  0.5 1" />
+        <path d="M 0.9 0.3 C 0.8 -0.3  0.5 0.5  0.5 1" />
+        break;
+    case Zodiac.Taurus:
+        <circle cx="0.5" cy="0.65" r="0.3" />
+        <path d="M 0.2 0.05 A 0.1 0.1 0 0 0 0.8 0.05" />
+        break;
+    case Zodiac.Gemini:
+        <line x1="0.25" y1="0.15" x2="0.25" y2="0.85" />
+        <line x1="0.75" y1="0.15" x2="0.75" y2="0.85" />
+        <path d="M 0 0 C 0.2 0.2  0.8 0.2  1 0" fill="none"/>
+        <path d="M 0 1 C 0.2 0.8  0.8 0.8  1 1" fill="none"/>
+        break;
+    case Zodiac.Cancer:
+        <path d="M 0.05 0.5 C 0 0  0.7 0  0.85 0.2" stroke-linecap="round"/>
+        <path d="M 0.95 0.5 C 1 1  0.3 1  0.15 0.8" stroke-linecap="round"/>
+        <circle cx="0.2" cy="0.5" r="0.15" fill="transparent" />
+        <circle cx="0.8" cy="0.5" r="0.15" fill="transparent" />
+        break;
+    case Zodiac.Leo:
+        <path d="M 0.45 0.6 
+                 C 0.3 0.6  0.25 0.7  0.25 0.8
+                 S 0.35 0.9  0.4 0.85
+                 S 0.5 0.7  0.45 0.4
+                 S 1.1 0.0  0.8 0.6
+                 S 1.0 0.9  0.9 0.8"
+              stroke-linecap="round"/>
+        break;
+    case Zodiac.Virgo:
+        <path d="M 0 0.05 
+                 C 0.1 0.05 0.2 0.05  0.2 0.2
+                 V 0.9
+                 M 0.2 0.2
+                 C 0.3 0.1  0.5 0.05  0.5 0.2
+                 V 0.9
+                 M 0.5 0.2
+                 C 0.6 0.1  0.8 0.05  0.8 0.2
+                 V 0.9
+                 C 0.8 1.0  0.95 0.95  0.95 0.95
+                 M 0.8 0.4
+                 C 1.1 0.2  0.8 0.8  0.7 1" 
+              stroke-linecap="round"/>  
+        break;
+    case Zodiac.Libra:
+        <line x1="0" y1="0.6" x2="1" y2="0.6" />
+        <line x1="0" y1="0.5" x2="0.275" y2="0.5" />
+        <line x1="0.725" y1="0.5" x2="1" y2="0.5" />
+        <path d="M 0.25 0.5 C 0.1 0  0.9 0  0.75 0.5" />
+        break;
+    case Zodiac.Scorpio:
+        <path d="M 0 0.05 
+                 C 0.1 0.05 0.2 0.05  0.2 0.2
+                 V 0.9
+                 M 0.2 0.2
+                 C 0.3 0.1  0.5 0.05  0.5 0.2
+                 V 0.9
+                 M 0.5 0.2
+                 C 0.6 0.1  0.8 0.05  0.8 0.2
+                 V 0.8
+                 C 0.8 1.0  0.95 0.95  0.95 0.8" />
+        <polygon points="0.93, 0.8  0.97,0.8 0.95, 0.78" />
+        break;
+    case Zodiac.Sagittarius:
+        <line x1="0.1" y1="0.9" x2="0.9" y2="0.1" />
+        <line x1="0.92" y1="0.1" x2="0.65" y2="0.1" />
+        <line x1="0.9" y1="0.08" x2="0.9" y2="0.35" />
+        <line x1="0.1" y1="0.4" x2="0.6" y2="0.9" />
+        break;
+    case Zodiac.Capricorn:
+        <path d="M 0.05 0.05
+                 C 0.2 0.05  0.2 0.4  0.2 0.5
+                 C 0.2 0.4  0.3 0.05  0.4 0.05
+                 S 0.45 0.3  0.5 0.5
+                 S 0.8 0.7  0.8 0.5
+                 S 0.5 0.4  0.5 0.5
+                 S 0.5 0.8  0.3 0.8" />
+        break;
+    case Zodiac.Aquarius:
+        <polyline points="0.15, 0.5  0.3, 0.3  0.45, 0.5  0.6, 0.3  0.75, 0.5  0.9, 0.3" />
+        <polyline points="0.15, 0.7  0.3, 0.5  0.45, 0.7  0.6, 0.5  0.75, 0.7  0.9, 0.5" />
+        break;
+    case Zodiac.Pisces:
+        <path d="M 0.2 0.1 C 0.4 0.3  0.4 0.7  0.2 0.9"/>
+        <path d="M 0.8 0.1 C 0.6 0.3  0.6 0.7  0.8 0.9"/>
+        <line x1="0.1" y1="0.5" x2="0.9" y2="0.5" />
+        break;
+}
+</svg>
+
+@code {
+    [EditorRequired][Parameter] public Zodiac Sign { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    [Parameter]
+    public string Height { get; set; } = "100%";
+
+    [Parameter]
+    public string RelativeX { get; set; } = "0";
+    
+    [Parameter]
+    public string RelativeY { get; set; } = "0";
+
+    [Parameter]
+    public string StrokeWidth { get; set; } = "0.1";
+
+    [Parameter]
+    public string Color { get; set; } = "black";
+
+    [Parameter]
+    public string Opacity { get; set; } = "1";
+
+}

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharpAstrology.West\SharpAstrology.West.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="WesternChart.razor.calculateObjectsDisplayPosition.cs">
+        <DependentUpon>WesternChart.razor</DependentUpon>
+      </Compile>
+      <Compile Update="WesternChart.razor.helperMethods.cs">
+        <DependentUpon>WesternChart.razor</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
