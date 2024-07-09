@@ -1,4 +1,6 @@
+@using SharpAstrology.DataModels
 @using SharpAstrology.Enums
+@using SharpAstrology.ExtensionMethods
 @using SharpAstrology.West.BlazorComponents.SubComponents
 
 
@@ -30,6 +32,33 @@
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
         break;
+    case WheelOptions.Comparator:
+        if (PlanetsPositionsOther is not null)
+        {
+            const double radius = 0.95;
+            foreach (var (planet, longitude) in _outerPlanetDisplayOther)
+            {
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Comparator ? -0.05 : 0.05));
+                var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
+                <_planet Planet="planet" Color="green"
+                         ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
+                         LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
+                         ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
+                         OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
+
+            }
+            foreach (var (planet, longitude) in _innerPlanetDisplayOther)
+            {
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Signs ? 0.05 : -0.05));
+                var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
+                <_planet Planet="planet" Color="green"
+                         ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
+                         LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
+                         ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
+                         OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
+            }
+        }
+        break;
 }
 <!-- endregion -->
     
@@ -47,6 +76,33 @@
             <_zodiacWheel RelativeOuterRadius="1.25" RelativeInnerRadius="1.05" 
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
+        break;
+    case WheelOptions.Comparator:
+        if (PlanetsPositionsOther is not null)
+        {
+            const double radius = 1.15;
+            foreach (var (planet, longitude) in _outerPlanetDisplayOther)
+            {
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Comparator ? -0.05 : 0.05));
+                var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
+                <_planet Planet="planet" Color="green"
+                         ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
+                         LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
+                         ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
+                         OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
+
+            }
+            foreach (var (planet, longitude) in _innerPlanetDisplayOther)
+            {
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Signs ? 0.05 : -0.05));
+                var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
+                <_planet Planet="planet" Color="green"
+                         ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
+                         LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
+                         ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
+                         OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
+            }
+        }
         break;
 }
 <!-- endregion -->
@@ -79,7 +135,7 @@
                   fill="transparent" 
                   fill-opacity="0.4" stroke-width="0.005" stroke-opacity="0.4"/>
 
-            @if (ShowOnOuterWheel == WheelOptions.Signs)
+            @if (ShowOnOuterWheel == WheelOptions.Comparator)
             {
                 <path d="M 1.25 0
                      A 1.25 1.25 0 0 0 @(_getPointAsString(angle, 1.25))
@@ -92,19 +148,19 @@
                     <line x1="1.25" y1="0" x2="1.05" y2="0" />
                 }
             }
-            @if (ShowOnInnerWheel == WheelOptions.Signs)
-            {
-                <path d="M 1.05 0
-                     A 1.05 1.05 0 0 0 @(_getPointAsString(angle, 1.05))
-                     L @_getPointAsString(angle, 0.85)
-                     A 0.85 0.85 0 0 1 0.85 0
-                     Z"
-                      fill="transparent" fill-opacity="0.4" stroke-width="0.005" stroke-opacity="0.4"/>
-                @if (i % 3 == 0)
-                {
-                    <line x1="1.05" y1="0" x2="0.85" y2="0" />
-                }
-            }
+             @if (ShowOnInnerWheel == WheelOptions.Comparator)
+             {
+                 <path d="M 1.05 0
+                      A 1.05 1.05 0 0 0 @(_getPointAsString(angle, 1.05))
+                      L @_getPointAsString(angle, 0.85)
+                      A 0.85 0.85 0 0 1 0.85 0
+                      Z"
+                       fill="transparent" fill-opacity="0.4" stroke-width="0.005" stroke-opacity="0.4"/>
+                 @if (i % 3 == 0)
+                 {
+                     <line x1="1.05" y1="0" x2="0.85" y2="0" />
+                 }
+             }
         </g>
 
         <!-- House Number -->
@@ -164,40 +220,12 @@ else
              ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
              OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
 }
-    
-@if (PlanetsPositionsOther is not null && 
-     (ShowOnOuterWheel == WheelOptions.Comparator || ShowOnInnerWheel == WheelOptions.Comparator))
-{
-    var radius = ShowOnOuterWheel == WheelOptions.Comparator ? 1.15 : 0.95;
-    foreach (var (planet, longitude) in _outerPlanetDisplayOther)
-    {
-        var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Comparator ? -0.05 : 0.05));
-        var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
-        <_planet Planet="planet" Color="green"
-                 ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
-                 LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
-                 ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
-                 OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
-
-    }
-    foreach (var (planet, longitude) in _innerPlanetDisplayOther)
-    {
-        var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Signs ? 0.05 : -0.05));
-        var linePosition = _getPoint(PlanetsPositionsOther[planet].Longitude, 1);
-        <_planet Planet="planet" Color="green"
-                 ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
-                 LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
-                 ShowRetrograde="Chart.MotionOf(planet) == Motion.Retrograde"
-                 OnClickCallback="(obj)=>OnClickCallback.InvokeAsync(obj)" />
-    }
-}
 <!-- endregion -->
 
 <!-- region Cross -->
 
 @if (Chart.HousePositions is not null)
 {
-    
     <g letter-spacing="initial" font-size="0.16%">
         <!-- Ascendant -->
         <g @onclick="@(()=>OnClickCallback.InvokeAsync(Cross.Asc))" class="cross" fill="transparent">
@@ -245,9 +273,8 @@ else
 <!-- region Aspects -->
 @if (ShowAspectsToOther 
      && PlanetsPositionsOther is not null
-     && (ShowOnInnerWheel == WheelOptions.Signs || ShowOnOuterWheel == WheelOptions.Signs))
+     && (ShowOnInnerWheel == WheelOptions.Comparator || ShowOnOuterWheel == WheelOptions.Comparator))
 {
-    // var objectsOfNoneRelevance = new HashSet<Planets>();
     foreach (var (obj1, dict) in _aspects)
     {
         foreach (var (obj2, aspect) in dict
@@ -285,3 +312,85 @@ else
 <!-- endregion -->
 
 </svg>
+
+@code{
+
+    private double _zero;
+    private string _viewBox;
+    bool _outer;
+    private Dictionary<Planets, double> _outerPlanetDisplay;
+    private Dictionary<Planets, double> _innerPlanetDisplay;
+    private Dictionary<Planets, double> _outerPlanetDisplayOther;
+    private Dictionary<Planets, double> _innerPlanetDisplayOther;
+    private Dictionary<Planets, Dictionary<Planets, Aspects>> _aspects;
+    
+
+    [Parameter] public string Width { get; set; } = "100%";
+    [Parameter] public string Height { get; set; } = "100%";
+    [Parameter] public string HoverColor { get; set; } = "yellow";
+    [Parameter] public string StrokeColor { get; set; } = "black";
+    [Parameter] public Dictionary<Aspects,string> AspectsColorMap { get; set; } = new()
+    {
+        [Aspects.Conjunction] = "red",
+        [Aspects.Opposition] = "red",
+        [Aspects.Sextile] = "blue",
+        [Aspects.Square] = "red",
+        [Aspects.Trine] = "blue",
+        [Aspects.Quincunx] = "green",
+        [Aspects.Quintile] = "green",
+        [Aspects.SemiSextile] = "green",
+        [Aspects.None] = "transparent"
+    };
+    [Parameter] public EventCallback<Enum> OnClickCallback { get; set; }
+    
+    
+    private AstrologyChart _chart;
+    [EditorRequired][Parameter] public AstrologyChart Chart
+    {
+        get => _chart;
+        set
+        {
+            _chart = value;
+            _aspects = value.CalculateAspects();
+            _zero = 180;
+            if (Chart.HousePositions is not null)
+            {
+                _zero += Chart.HousePositions.Cross[Cross.Asc];
+                Chart.HousePositions.HouseCusps[0] = Chart.HousePositions.Cross[Cross.Asc];
+            }
+            (_outerPlanetDisplay, _innerPlanetDisplay) = _calculateObjectsDisplayPosition(_chart);
+        }
+    }
+    
+    private IDictionary<Planets, PlanetPosition>? _planetsPositionsOther;
+    [Parameter] public IDictionary<Planets, PlanetPosition>? PlanetsPositionsOther 
+    {
+        get => _planetsPositionsOther;
+        set
+        {
+            _planetsPositionsOther = value;
+            if(value is null) return;
+            (_outerPlanetDisplayOther, _innerPlanetDisplayOther) = _calculateObjectsDisplayPosition(_planetsPositionsOther!);
+        }
+    }
+    [Parameter] public WheelOptions ShowOnInnerWheel { get; set; } = WheelOptions.Signs;
+    
+    private WheelOptions _showOnOuterWheel = WheelOptions.None;
+    [Parameter] public WheelOptions ShowOnOuterWheel
+    {
+        get => _showOnOuterWheel;
+        set
+        {
+            _showOnOuterWheel = value;
+            _outer = value != WheelOptions.None;
+            _viewBox = _outer ? "-1.4 -1.4 2.8 2.8" : "-1.2 -1.2 2.4 2.4";
+        } 
+    }
+    [Parameter] public bool ShowAspectsToOther { get; set; }
+    
+    protected override void OnParametersSet()
+    {
+        _viewBox = _outer ? "-1.4 -1.4 2.8 2.8" : "-1.2 -1.2 2.4 2.4";
+    }
+
+}

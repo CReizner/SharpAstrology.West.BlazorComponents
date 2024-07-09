@@ -10,7 +10,7 @@ internal class OrbitOfPlanets
     #region Constructor
 
     public OrbitOfPlanets() {}
-    public OrbitOfPlanets(Dictionary<Planets, PlanetPosition> objectPositions)
+    public OrbitOfPlanets(IDictionary<Planets, PlanetPosition> objectPositions)
     {
         OrbitOfPlanetsElement before = null;
         foreach (var p in objectPositions.OrderBy(x => x.Value.Longitude))
@@ -44,7 +44,7 @@ internal class OrbitOfPlanets
     public OrbitOfPlanets(AstrologyChart chart)
     {
         OrbitOfPlanetsElement before = null;
-        foreach (var p in chart.SupportedObjects.OrderBy(p=>chart.PositionOf(p)))
+        foreach (var p in chart.SupportedObjects.OrderBy(p=>chart.PositionOf(p).Longitude))
         {
             if (before is null)
             {

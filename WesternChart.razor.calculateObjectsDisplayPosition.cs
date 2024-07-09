@@ -6,7 +6,7 @@ namespace SharpAstrology.West.BlazorComponents;
 
 public partial class WesternChart
 {
-    private (Dictionary<Planets, double> outerDegrees, Dictionary<Planets, double> innerDegrees) _calculateObjectsDisplayPosition(Dictionary<Planets, PlanetPosition> planetPositions)
+    private (Dictionary<Planets, double> outerDegrees, Dictionary<Planets, double> innerDegrees) _calculateObjectsDisplayPosition(IDictionary<Planets, PlanetPosition> planetPositions)
     {
         var outerOrbit = new OrbitOfPlanets(planetPositions);
         var innerOrbit = new OrbitOfPlanets();
