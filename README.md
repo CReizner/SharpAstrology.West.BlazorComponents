@@ -21,9 +21,9 @@ This package depends on SharpAstrology.West. Here is the dependency graph.
 
 ```mermaid
 flowchart LR
-    id1[SharpAstrology.Base]->id2[SharpAstrology.West]
-    id2->id3[SharpAstrology.West.BlazorComponents]
-    id4[SharpAstrology.SwissEph]--optional-.->id2
+    id1[SharpAstrology.Base]-->id2[SharpAstrology.West]
+    id2-->id3[SharpAstrology.West.BlazorComponents]
+    id4[SharpAstrology.SwissEph]-.->|optional|id2
 ```
 
 # Examples
