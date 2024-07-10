@@ -1,7 +1,8 @@
 # SharpAstrology.West.BlazorComponents
 
 This package provides useful Blazor components to display information of an AstrologyChart class from the SharpAstrology.Base package.
-<p style="color: red">This package is still experimental. Interfaces can change before version 1.0.0.</p>
+
+${\color{red}This \space package \space is \space still \space experimental. \space Interfaces \space can \space change \space before \space version \space 1.0.0.}$
 
 ## SharpAstrology Packages
 | Package                                                                                                                | Version | Description                                   | Licence  |
