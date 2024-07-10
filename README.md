@@ -30,8 +30,12 @@ flowchart LR
 # Examples
 ## Setup
 All examples use the [SharpAstrology.SwissEph](https://github.com/CReizner/SharpAstrology.SwissEph) package.
+
 ```dotnet add package SharpAstrology.SwissEph```
+
 Create a Blazor project with interactive server components. Inject The SwissEphemeridesService.
+
+Update the **program.cs** file. 
 ```razor
 ...
 using SharpAstrology.Ephemerides;
