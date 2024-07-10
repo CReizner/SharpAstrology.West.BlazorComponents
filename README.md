@@ -115,8 +115,39 @@ builder.Services.AddSingleton<SwissEphemeridesService>();
     }
 }
 ```
-
-## Can I create a combine chart with another person?
-
-
 ![Astro Chart Example](.github_assets/astro_chart_with_transits.png)
+
+## Can I create a combine chart with another person with aspects to each other?
+```razor
+@using SharpAstrology.DataModels
+@using SharpAstrology.Ephemerides
+@using SharpAstrology.BlazorComponents
+@rendermode InteractiveServer
+
+<PageTitle>Astrology Chart Example</PageTitle>
+
+<div style="display: flex; width: 650px; align-items: center; justify-content: center">
+         <WesternAstrologyChart Height="600" Width="600"
+                                Chart="chart"
+                                ChartComparator="chartComparator"
+                                ShowOnInnerWheel="WesternChartWheelOptions.Comparator"
+                                ShowOnOuterWheel="WesternChartWheelOptions.Signs"
+                                ShowAspectsToOther="true"/>
+</div>
+
+@code
+{
+    [Inject] SwissEphemeridesService EphService { get; set; }
+    private AstrologyChart chart;
+    private AstrologyChart chartComparator;
+    
+    protected override void OnInitialized()
+    {
+        using var eph = EphService.CreateContext();
+        chart = new AstrologyChart(new DateTime(1988, 9, 4, 1, 15, 0, DateTimeKind.Utc), eph, 51.0, 11.0);
+        chartComparator = new AstrologyChart(new DateTime(1990, 2, 6, 22, 50, 0, DateTimeKind.Utc), eph);
+    }
+}
+```
+![Combine Chart](.github_assets/astrology_chart_combine.png)
+

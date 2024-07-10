@@ -2,6 +2,7 @@
 @using SharpAstrology.Enums
 @using SharpAstrology.ExtensionMethods
 @using SharpAstrology.BlazorComponents.SubComponents
+@using SharpAstrology.Utility
 
 
 <style>
@@ -48,7 +49,7 @@
             const double radius = 0.95;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Comparator ? -0.05 : 0.05));
+                var objectPosition = _getPoint(longitude, radius+-0.05);
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -59,7 +60,7 @@
             }
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Signs ? 0.05 : -0.05));
+                var objectPosition = _getPoint(longitude, radius+0.05);
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -93,7 +94,7 @@
             const double radius = 1.15;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Comparator ? -0.05 : 0.05));
+                var objectPosition = _getPoint(longitude, radius-0.05);
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -104,7 +105,7 @@
             }
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Signs ? 0.05 : -0.05));
+                var objectPosition = _getPoint(longitude, radius+0.05);
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -232,7 +233,6 @@ else
 <!-- endregion -->
 
 <!-- region Cross -->
-
 @if (Chart.HousePositions is not null)
 {
     <g letter-spacing="initial" font-size="0.16%">
@@ -345,7 +345,20 @@ else
     [Parameter] public IEnumerable<Aspects> IncludeAspects { get; set; } =
         [Aspects.Conjunction, Aspects.Opposition, Aspects.Sextile, Aspects.Square, Aspects.Trine];
     [Parameter] public EventCallback<Enum> OnClickCallback { get; set; }
-    
+
+    private Dictionary<Aspects, Dictionary<Planets, int>> _orbitDefinitions = OrbitBuilder.WithWesternDefaultOrbits().Build();
+    [Parameter] public Dictionary<Aspects, Dictionary<Planets, int>> OrbitDefinitions
+    {
+        get => _orbitDefinitions;
+        set
+        {
+            _orbitDefinitions = value;
+            if (_chart is not null)
+            {
+                _aspects = _chart.CalculateAspects(value);
+            }
+        } 
+    } 
     
     private AstrologyChart _chart;
     [EditorRequired][Parameter] public AstrologyChart Chart
@@ -354,7 +367,7 @@ else
         set
         {
             _chart = value;
-            _aspects = value.CalculateAspects();
+            _aspects = value.CalculateAspects(OrbitDefinitions);
             _zero = 180;
             if (Chart.HousePositions is not null)
             {
