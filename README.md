@@ -48,4 +48,4 @@ This package provides useful Blazor components to display information of an Astr
     }
 }
 ```
-[Astro Chart Example](.github_assets/astro_chart_with_transits.png)
+![Astro Chart Example](.github_assets/astro_chart_with_transits.png)
