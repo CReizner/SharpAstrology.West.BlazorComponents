@@ -1,8 +1,8 @@
 using SharpAstrology.Enums;
 
-namespace SharpAstrology.West.BlazorComponents;
+namespace SharpAstrology.BlazorComponents;
 
-public sealed class WesternAstrologyChartOptions
+public sealed class WesternAstrologyChartStyleOptions
 {
     public string HoverColorSign { get; set; } = "rgba(0, 255, 255, 0.4)";
     public string HoverColorHouse { get; set; } = "rgba(0, 255, 255, 0.4)";
@@ -12,9 +12,6 @@ public sealed class WesternAstrologyChartOptions
     public string ColorWaterSign { get; set; } = "blue";
     public string ColorAirSign { get; set; } = "darkgoldenrod";
     public string ColorEarthSign { get; set; } = "green";
-
-    public IEnumerable<Aspects> IncludeAspects { get; set; } =
-        [Aspects.Conjunction, Aspects.Opposition, Aspects.Sextile, Aspects.Square, Aspects.Trine];
     public Dictionary<Aspects,string> AspectsColorMap { get; set; } = new()
     {
         [Aspects.Conjunction] = "red",

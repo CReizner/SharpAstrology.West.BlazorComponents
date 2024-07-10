@@ -1,7 +1,7 @@
 using SharpAstrology.DataModels;
 using SharpAstrology.Enums;
 
-namespace SharpAstrology.West.BlazorComponents;
+namespace SharpAstrology.BlazorComponents;
 
 internal class OrbitOfPlanets
 { 

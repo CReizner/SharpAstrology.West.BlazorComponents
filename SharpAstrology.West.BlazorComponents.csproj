@@ -4,7 +4,27 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>SharpAstrology.BlazorComponents</RootNamespace>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>SharpAstrology.West.BlazorComponents</PackageId>
+        <PackageTags>Astrology</PackageTags>
+        <Version>0.1.0</Version>
+        <Authors>Christian Reizner</Authors>
+        <IsPackable>true</IsPackable>
+        <Description>
+            This package provides useful Blazor components to display information of an AstrologyChart class from the SharpAstrology.Base package.
+        </Description>
+        <RepositoryUrl>https://github.com/CReizner/SharpAstrology.West.BlazorComponents</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/CReizner/SharpAstrology.West.BlazorComponents</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="$(PackageReadmeFile)" CopyToOutputDirectory="Always"/>
+    </ItemGroup>
 
 
     <ItemGroup>
@@ -13,11 +33,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
-        <PackageReference Include="SharpAstrology.West" Version="*" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\SharpAstrology.West\SharpAstrology.West.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,6 +42,10 @@
       <Compile Update="WesternAstrologyChart.razor.helperMethods.cs">
         <DependentUpon>WesternAstrologyChart.razor</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharpAstrology.West\SharpAstrology.West.csproj" />
     </ItemGroup>
 
 </Project>

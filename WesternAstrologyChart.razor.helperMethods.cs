@@ -1,7 +1,7 @@
 using System.Globalization;
 using SharpAstrology.Enums;
 
-namespace SharpAstrology.West.BlazorComponents;
+namespace SharpAstrology.BlazorComponents;
 
 public partial class WesternAstrologyChart
 {

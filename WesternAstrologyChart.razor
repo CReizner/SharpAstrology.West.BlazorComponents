@@ -1,19 +1,19 @@
 @using SharpAstrology.DataModels
 @using SharpAstrology.Enums
 @using SharpAstrology.ExtensionMethods
-@using SharpAstrology.West.BlazorComponents.SubComponents
+@using SharpAstrology.BlazorComponents.SubComponents
 
 
 <style>
     .sharp-astrology-chart {
-        --sharp-astrology-sign-hover-color: @ChartOptions.HoverColorSign;
-        --sharp-astrology-house-hovor-color: @ChartOptions.HoverColorHouse;
-        --sharp-astrology-aspect-hover-color: @ChartOptions.HoverColorAspects;
-        --sharp-astrology-planet-hover-color: @ChartOptions.HoverColorPlanets;
-        --sharp-astrology-fire-sign-color: @ChartOptions.ColorFireSign;
-        --sharp-astrology-water-sign-color: @ChartOptions.ColorWaterSign;
-        --sharp-astrology-air-sign-color: @ChartOptions.ColorAirSign;
-        --sharp-astrology-earth-sign-color: @ChartOptions.ColorEarthSign;
+        --sharp-astrology-sign-hover-color: @ChartStyleOptions.HoverColorSign;
+        --sharp-astrology-house-hovor-color: @ChartStyleOptions.HoverColorHouse;
+        --sharp-astrology-aspect-hover-color: @ChartStyleOptions.HoverColorAspects;
+        --sharp-astrology-planet-hover-color: @ChartStyleOptions.HoverColorPlanets;
+        --sharp-astrology-fire-sign-color: @ChartStyleOptions.ColorFireSign;
+        --sharp-astrology-water-sign-color: @ChartStyleOptions.ColorWaterSign;
+        --sharp-astrology-air-sign-color: @ChartStyleOptions.ColorAirSign;
+        --sharp-astrology-earth-sign-color: @ChartStyleOptions.ColorEarthSign;
     }
     .sharp-astrology-chart .house:hover > path {
         fill: var(--sharp-astrology-house-hovor-color);
@@ -30,25 +30,25 @@
 <!-- region Inner Wheel -->
 @switch (ShowOnInnerWheel)
 {
-    case WheelOptions.Signs:
+    case WesternChartWheelOptions.Signs:
         <g transform=@($"rotate({S(_zero)})")>
             <_zodiacWheel RelativeOuterRadius="1.05" RelativeInnerRadius="0.85" 
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
         break;
-    case WheelOptions.Constellations:
+    case WesternChartWheelOptions.Constellations:
         <g transform=@($"rotate({S(_zero-Chart.Ayanamsa)})")>
             <_zodiacWheel RelativeOuterRadius="1.05" RelativeInnerRadius="0.85" 
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
         break;
-    case WheelOptions.Comparator:
+    case WesternChartWheelOptions.Comparator:
         if (_chartComparator is not null)
         {
             const double radius = 0.95;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Comparator ? -0.05 : 0.05));
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Comparator ? -0.05 : 0.05));
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -59,7 +59,7 @@
             }
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Signs ? 0.05 : -0.05));
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Signs ? 0.05 : -0.05));
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -75,25 +75,25 @@
 <!-- region Outer Wheel -->
 @switch (ShowOnOuterWheel)
 {
-    case WheelOptions.Signs:
+    case WesternChartWheelOptions.Signs:
         <g transform=@($"rotate({S(_zero)})")>
             <_zodiacWheel RelativeOuterRadius="1.25" RelativeInnerRadius="1.05" 
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
         break;
-    case WheelOptions.Constellations:
+    case WesternChartWheelOptions.Constellations:
         <g transform=@($"rotate({S(_zero-Chart.Ayanamsa)})")>
             <_zodiacWheel RelativeOuterRadius="1.25" RelativeInnerRadius="1.05" 
                           OnClickCallback="(zodiac)=>OnClickCallback.InvokeAsync(zodiac)" />
         </g>
         break;
-    case WheelOptions.Comparator:
+    case WesternChartWheelOptions.Comparator:
         if (_chartComparator is not null)
         {
             const double radius = 1.15;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Comparator ? -0.05 : 0.05));
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Comparator ? -0.05 : 0.05));
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -104,7 +104,7 @@
             }
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
-                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WheelOptions.Signs ? 0.05 : -0.05));
+                var objectPosition = _getPoint(longitude, radius+(ShowOnOuterWheel == WesternChartWheelOptions.Signs ? 0.05 : -0.05));
                 var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
@@ -145,7 +145,7 @@
                   fill="transparent" 
                   fill-opacity="0.4" stroke-width="0.005" stroke-opacity="0.4"/>
 
-            @if (ShowOnOuterWheel == WheelOptions.Comparator)
+            @if (ShowOnOuterWheel == WesternChartWheelOptions.Comparator)
             {
                 <path d="M 1.25 0
                      A 1.25 1.25 0 0 0 @(_getPointAsString(angle, 1.25))
@@ -158,7 +158,7 @@
                     <line x1="1.25" y1="0" x2="1.05" y2="0" />
                 }
             }
-             @if (ShowOnInnerWheel == WheelOptions.Comparator)
+             @if (ShowOnInnerWheel == WesternChartWheelOptions.Comparator)
              {
                  <path d="M 1.05 0
                       A 1.05 1.05 0 0 0 @(_getPointAsString(angle, 1.05))
@@ -282,19 +282,19 @@ else
 <!-- region Aspects -->
 @if (ShowAspectsToOther 
      && ChartComparator is not null
-     && (ShowOnInnerWheel == WheelOptions.Comparator || ShowOnOuterWheel == WheelOptions.Comparator))
+     && (ShowOnInnerWheel == WesternChartWheelOptions.Comparator || ShowOnOuterWheel == WesternChartWheelOptions.Comparator))
 {
     foreach (var (obj1, dict) in _aspects)
     {
         foreach (var (obj2, aspect) in dict
-                     .Where(x=>ChartOptions.IncludeAspects.Contains(x.Value))   
+                     .Where(x=>IncludeAspects.Contains(x.Value))   
                      .Where(p=>p.Value != Aspects.None && p.Value != Aspects.Conjunction))
         {
             var pos1 = _getPoint(Chart.PositionOf(obj1).Longitude, 0.57);
             var pos2 = _getPoint(ChartComparator.PositionOf(obj2).Longitude, 0.57);
             <line x1="@S(pos1.x)" y1="@S(pos1.y)"
                   x2="@S(pos2.x)" y2="@S(pos2.y)" 
-                  stroke="@ChartOptions.AspectsColorMap[aspect]" stroke-width="0.013" stroke-opacity="0.7" class="aspect"
+                  stroke="@ChartStyleOptions.AspectsColorMap[aspect]" stroke-width="0.013" stroke-opacity="0.7" class="aspect"
                   @onclick="@(()=>OnClickCallback.InvokeAsync(aspect))"/>
         }
     }
@@ -306,7 +306,7 @@ else
     {
         objectsOfNoneRelevance.Add(obj1);
         foreach (var (obj2, aspect) in dict
-                     .Where(x=>ChartOptions.IncludeAspects.Contains(x.Value))
+                     .Where(x=>IncludeAspects.Contains(x.Value))
                      .Where(p=>!objectsOfNoneRelevance.Contains(p.Key))
                      .Where(p=>p.Value != Aspects.None && p.Value != Aspects.Conjunction))
         {
@@ -317,7 +317,7 @@ else
             var pos2 = _getPoint(Chart.PositionOf(obj2).Longitude, 0.57);
             <line x1="@S(pos1.x)" y1="@S(pos1.y)"
                   x2="@S(pos2.x)" y2="@S(pos2.y)" 
-                  stroke="@ChartOptions.AspectsColorMap[aspect]" stroke-width="0.013" stroke-opacity="0.7" class="aspect"
+                  stroke="@ChartStyleOptions.AspectsColorMap[aspect]" stroke-width="0.013" stroke-opacity="0.7" class="aspect"
                   @onclick="@(()=>OnClickCallback.InvokeAsync(aspect))"/>
         }
     }
@@ -336,12 +336,14 @@ else
     private Dictionary<Planets, double> _outerPlanetDisplayOther;
     private Dictionary<Planets, double> _innerPlanetDisplayOther;
     private Dictionary<Planets, Dictionary<Planets, Aspects>> _aspects;
+    private string StrokeColor { get; set; } = "black";
     
-    private WesternAstrologyChartOptions ChartOptions { get; set; } = new();
+    private WesternAstrologyChartStyleOptions ChartStyleOptions { get; set; } = new();
 
     [Parameter] public string Width { get; set; } = "100%";
     [Parameter] public string Height { get; set; } = "100%";
-    [Parameter] public string StrokeColor { get; set; } = "black";
+    [Parameter] public IEnumerable<Aspects> IncludeAspects { get; set; } =
+        [Aspects.Conjunction, Aspects.Opposition, Aspects.Sextile, Aspects.Square, Aspects.Trine];
     [Parameter] public EventCallback<Enum> OnClickCallback { get; set; }
     
     
@@ -375,16 +377,16 @@ else
         } 
     }
     
-    [Parameter] public WheelOptions ShowOnInnerWheel { get; set; } = WheelOptions.Signs;
+    [Parameter] public WesternChartWheelOptions ShowOnInnerWheel { get; set; } = WesternChartWheelOptions.Signs;
     
-    private WheelOptions _showOnOuterWheel = WheelOptions.None;
-    [Parameter] public WheelOptions ShowOnOuterWheel
+    private WesternChartWheelOptions _showOnOuterWheel = WesternChartWheelOptions.None;
+    [Parameter] public WesternChartWheelOptions ShowOnOuterWheel
     {
         get => _showOnOuterWheel;
         set
         {
             _showOnOuterWheel = value;
-            _outer = value != WheelOptions.None;
+            _outer = value != WesternChartWheelOptions.None;
             _viewBox = _outer ? "-1.4 -1.4 2.8 2.8" : "-1.2 -1.2 2.4 2.4";
         } 
     }
