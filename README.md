@@ -14,6 +14,35 @@ This package provides useful Blazor components to display information of an Astr
 | [SharpAstrology.West](https://github.com/CReizner/SharpAstrology.West)                                                 |  0.1.0  | Extensions for western astrology systems      |   MIT    |
 | [SharpAstrology.West.BlazorComponents](https://github.com/CReizner/SharpAstrology.West.BlazorComponents)               |  0.1.0  | Western astrology charts as Blazor components |   MIT    |
 
+# Install
+```dotnet add package SharpAstrology.West.BlazorComponents```
+
+This package depends on SharpAstrology.West. Here is the dependency graph.
+
+```mermaid
+flowchart LR
+    id1[SharpAstrology.Base]->id2[SharpAstrology.West]
+    id2->id3[SharpAstrology.West.BlazorComponents]
+    id4[SharpAstrology.SwissEph]--optional-.->id2
+```
+
+# Examples
+## Setup
+All examples use the [SharpAstrology.SwissEph](https://github.com/CReizner/SharpAstrology.SwissEph) package.
+```dotnet add package SharpAstrology.SwissEph```
+Create a Blazor project with interactive server components. Inject The SwissEphemeridesService.
+```razor
+...
+using SharpAstrology.Ephemerides;
+
+...
+
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+builder.Services.AddSingleton<SwissEphemeridesService>();
+...
+```
+
 ## How can I display a basic chart in Blazor?
 ```razor
 @page "/"
