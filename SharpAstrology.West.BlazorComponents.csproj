@@ -10,7 +10,7 @@
     <PropertyGroup>
         <PackageId>SharpAstrology.West.BlazorComponents</PackageId>
         <PackageTags>Astrology</PackageTags>
-        <Version>0.1.0</Version>
+        <Version>0.1.0-alpha1</Version>
         <Authors>Christian Reizner</Authors>
         <IsPackable>true</IsPackable>
         <Description>
@@ -33,6 +33,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
+        <PackageReference Include="SharpAstrology.West" Version="*" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,10 +43,6 @@
       <Compile Update="WesternAstrologyChart.razor.helperMethods.cs">
         <DependentUpon>WesternAstrologyChart.razor</DependentUpon>
       </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\SharpAstrology.West\SharpAstrology.West.csproj" />
     </ItemGroup>
 
 </Project>
