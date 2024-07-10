@@ -21,11 +21,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="WesternChart.razor.calculateObjectsDisplayPosition.cs">
-        <DependentUpon>WesternChart.razor</DependentUpon>
+      <Compile Update="WesternAstrologyChart.razor.calculateObjectsDisplayPosition.cs">
+        <DependentUpon>WesternAstrologyChart.razor</DependentUpon>
       </Compile>
-      <Compile Update="WesternChart.razor.helperMethods.cs">
-        <DependentUpon>WesternChart.razor</DependentUpon>
+      <Compile Update="WesternAstrologyChart.razor.helperMethods.cs">
+        <DependentUpon>WesternAstrologyChart.razor</DependentUpon>
       </Compile>
     </ItemGroup>
 

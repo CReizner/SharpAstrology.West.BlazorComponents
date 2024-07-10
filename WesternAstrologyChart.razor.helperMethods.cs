@@ -3,7 +3,7 @@ using SharpAstrology.Enums;
 
 namespace SharpAstrology.West.BlazorComponents;
 
-public partial class WesternChart
+public partial class WesternAstrologyChart
 {
     private string S(double value) => value.ToString(CultureInfo.InvariantCulture);
 

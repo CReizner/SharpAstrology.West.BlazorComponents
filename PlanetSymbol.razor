@@ -87,8 +87,16 @@
         break;
     }
 
-    <text x="1.1" y="1.1" letter-spacing="initial" font-size="3%" text-anchor="end" stroke-width="0.03" class="@Class"
-          style="visibility: @(_showRetrograde(ShowRetrograde, Planet) ? "visible" : "hidden"); pointer-events: none">
+    <text x="1.1" y="1.1" class="@Class"
+          style="
+              visibility: @(_showRetrograde(ShowRetrograde, Planet) ? "visible" : "hidden"); 
+              pointer-events: none;
+              letter-spacing: initial;
+              font-size: 3%;
+              text-anchor: end;
+              stroke-width: 0;
+              fill: @Color;
+              font-family: Arial, sans-serif">
         R
     </text>
 

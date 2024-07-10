@@ -4,7 +4,7 @@
 
 <style>
     .arc:hover{
-        fill: @HoverColor;
+        fill: var(--sharp-astrology-sign-hover-color);
     }
 </style>
 
@@ -16,7 +16,7 @@
                  A @_outer @_outer 0 0 0 @S(cos * RelativeOuterRadius) -@S(sin * RelativeOuterRadius)
                  L @S(RelativeInnerRadius * cos) -@S(RelativeInnerRadius * sin)
                  A @_inner @_inner 0 0 1 @_inner 0
-                 Z" class="arc" fill="transparent"/>
+                 Z" class="arc" fill="transparent" fill-opacity="0.4"/>
         <!-- Sign Symbol -->
         <g transform="translate(-@a -@a)
                       rotate(75  @a @a)

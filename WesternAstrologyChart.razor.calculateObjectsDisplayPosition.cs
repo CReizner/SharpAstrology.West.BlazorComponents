@@ -4,7 +4,7 @@ using SharpAstrology.Enums;
 
 namespace SharpAstrology.West.BlazorComponents;
 
-public partial class WesternChart
+public partial class WesternAstrologyChart
 {
     private (Dictionary<Planets, double> outerDegrees, Dictionary<Planets, double> innerDegrees) _calculateObjectsDisplayPosition(IDictionary<Planets, PlanetPosition> planetPositions)
     {
