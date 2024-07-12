@@ -10,7 +10,7 @@
     <PropertyGroup>
         <PackageId>SharpAstrology.West.BlazorComponents</PackageId>
         <PackageTags>Astrology</PackageTags>
-        <Version>0.1.0-alpha1</Version>
+        <Version>0.1.0-preview.1</Version>
         <Authors>Christian Reizner</Authors>
         <IsPackable>true</IsPackable>
         <Description>
@@ -33,7 +33,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
-        <PackageReference Include="SharpAstrology.West" Version="*" />
+        <PackageReference Include="SharpAstrology.West" Version="*-*" />
     </ItemGroup>
 
     <ItemGroup>

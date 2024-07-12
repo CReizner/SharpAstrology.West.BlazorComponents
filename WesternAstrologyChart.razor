@@ -44,13 +44,13 @@
         </g>
         break;
     case WesternChartWheelOptions.Comparator:
-        if (_chartComparator is not null)
+        if (_comparatorChart is not null)
         {
             const double radius = 0.95;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
                 var objectPosition = _getPoint(longitude, radius+-0.05);
-                var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
+                var linePosition = _getPoint(_comparatorChart.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
                          LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
@@ -61,7 +61,7 @@
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
                 var objectPosition = _getPoint(longitude, radius+0.05);
-                var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
+                var linePosition = _getPoint(_comparatorChart.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
                          LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
@@ -89,13 +89,13 @@
         </g>
         break;
     case WesternChartWheelOptions.Comparator:
-        if (_chartComparator is not null)
+        if (_comparatorChart is not null)
         {
             const double radius = 1.15;
             foreach (var (planet, longitude) in _outerPlanetDisplayOther)
             {
                 var objectPosition = _getPoint(longitude, radius-0.05);
-                var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
+                var linePosition = _getPoint(_comparatorChart.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
                          LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
@@ -106,7 +106,7 @@
             foreach (var (planet, longitude) in _innerPlanetDisplayOther)
             {
                 var objectPosition = _getPoint(longitude, radius+0.05);
-                var linePosition = _getPoint(_chartComparator.PositionOf(planet).Longitude, 1);
+                var linePosition = _getPoint(_comparatorChart.PositionOf(planet).Longitude, 1);
                 <_planet Planet="planet" Color="green"
                          ImagePositionX="@objectPosition.x" ImagePositionY="@objectPosition.y"
                          LinePositionX="@linePosition.x" LinePositionY="@linePosition.y" 
@@ -281,7 +281,7 @@ else
 
 <!-- region Aspects -->
 @if (ShowAspectsToOther 
-     && ChartComparator is not null
+     && ComparatorChart is not null
      && (ShowOnInnerWheel == WesternChartWheelOptions.Comparator || ShowOnOuterWheel == WesternChartWheelOptions.Comparator))
 {
     foreach (var (obj1, dict) in _aspects)
@@ -291,7 +291,7 @@ else
                      .Where(p=>p.Value != Aspects.None && p.Value != Aspects.Conjunction))
         {
             var pos1 = _getPoint(Chart.PositionOf(obj1).Longitude, 0.57);
-            var pos2 = _getPoint(ChartComparator.PositionOf(obj2).Longitude, 0.57);
+            var pos2 = _getPoint(ComparatorChart.PositionOf(obj2).Longitude, 0.57);
             <line x1="@S(pos1.x)" y1="@S(pos1.y)"
                   x2="@S(pos2.x)" y2="@S(pos2.y)" 
                   stroke="@ChartStyleOptions.AspectsColorMap[aspect]" stroke-width="0.013" stroke-opacity="0.7" class="aspect"
@@ -346,13 +346,13 @@ else
         [Aspects.Conjunction, Aspects.Opposition, Aspects.Sextile, Aspects.Square, Aspects.Trine];
     [Parameter] public EventCallback<Enum> OnClickCallback { get; set; }
 
-    private Dictionary<Aspects, Dictionary<Planets, int>> _orbitDefinitions = OrbitBuilder.WithWesternDefaultOrbits().Build();
-    [Parameter] public Dictionary<Aspects, Dictionary<Planets, int>> OrbitDefinitions
+    private Dictionary<Aspects, Dictionary<Planets, int>> _orbits = OrbitBuilder.WithWesternDefaultOrbits().Build();
+    [Parameter] public Dictionary<Aspects, Dictionary<Planets, int>> Orbits
     {
-        get => _orbitDefinitions;
+        get => _orbits;
         set
         {
-            _orbitDefinitions = value;
+            _orbits = value;
             if (_chart is not null)
             {
                 _aspects = _chart.CalculateAspects(value);
@@ -367,7 +367,7 @@ else
         set
         {
             _chart = value;
-            _aspects = value.CalculateAspects(OrbitDefinitions);
+            _aspects = value.CalculateAspects(Orbits);
             _zero = 180;
             if (Chart.HousePositions is not null)
             {
@@ -378,15 +378,15 @@ else
         }
     }
 
-    private AstrologyChart? _chartComparator;
-    [Parameter] public AstrologyChart? ChartComparator
+    private AstrologyChart? _comparatorChart;
+    [Parameter] public AstrologyChart? ComparatorChart
     {
-        get => _chartComparator;
+        get => _comparatorChart;
         set
         {
-            _chartComparator = value;
+            _comparatorChart = value;
             if(value is null) return;
-            (_outerPlanetDisplayOther, _innerPlanetDisplayOther) = _calculateObjectsDisplayPosition(_chartComparator!);
+            (_outerPlanetDisplayOther, _innerPlanetDisplayOther) = _calculateObjectsDisplayPosition(_comparatorChart!);
         } 
     }
     
