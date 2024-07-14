@@ -3,14 +3,14 @@ using SharpAstrology.Enums;
 
 namespace SharpAstrology.BlazorComponents;
 
-internal class OrbitOfPlanets
+internal class RingOfPlanets
 { 
     private HashSet<OrbitOfPlanetsElement> Planets { get; } = new();
 
     #region Constructor
 
-    public OrbitOfPlanets() {}
-    public OrbitOfPlanets(IDictionary<Planets, PlanetPosition> objectPositions)
+    public RingOfPlanets() {}
+    public RingOfPlanets(IDictionary<Planets, PlanetPosition> objectPositions)
     {
         OrbitOfPlanetsElement before = null;
         foreach (var p in objectPositions.OrderBy(x => x.Value.Longitude))
@@ -41,7 +41,7 @@ internal class OrbitOfPlanets
         before.Next = first;
         first.Before = before;
     }
-    public OrbitOfPlanets(AstrologyChart chart)
+    public RingOfPlanets(AstrologyChart chart)
     {
         OrbitOfPlanetsElement before = null;
         foreach (var p in chart.SupportedObjects.OrderBy(p=>chart.PositionOf(p).Longitude))

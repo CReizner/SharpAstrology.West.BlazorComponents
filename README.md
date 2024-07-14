@@ -12,7 +12,7 @@ ${\color{red}This \space package \space is \space still \space experimental. \sp
 | [SharpAstrology.HumanDesign](https://github.com/CReizner/SharpAstrology.HumanDesign)                                   |  1.1.0  | Extensions for the Human Design system        |   MIT    |
 | [SharpAstrology.HumanDesign.BlazorComponents](https://github.com/CReizner/SharpAstrology.HumanDesign.BlazorComponents) |  0.2.1  | Human Design charts as Blazor components      |   MIT    |
 | [SharpAstrology.Vedic](https://github.com/CReizner/SharpAstrology.Vedic)                                               |  0.1.0  | Extensions for Vedic astrology systems        |   MIT    |
-| [SharpAstrology.West](https://github.com/CReizner/SharpAstrology.West)                                                 |  0.1.0-preview.2  | Extensions for western astrology systems      |   MIT    |
+| [SharpAstrology.West](https://github.com/CReizner/SharpAstrology.West)                                                 |  0.1.0-preview.4  | Extensions for western astrology systems      |   MIT    |
 | [SharpAstrology.West.BlazorComponents](https://github.com/CReizner/SharpAstrology.West.BlazorComponents)               |  0.1.0-preview.1  | Western astrology charts as Blazor components |   MIT    |
 
 # Install
@@ -64,9 +64,9 @@ builder.Services.AddSingleton<SwissEphemeridesService>();
                                Chart="chartWithLocation"/>
     </div>
     <div>
-    <h2 style="text-align: center">Chart without location information</h2>
-    <WesternAstrologyChart Height="500" Width="500"
-                           Chart="chartWithoutLocation"/>
+        <h2 style="text-align: center">Chart without location information</h2>
+        <WesternAstrologyChart Height="500" Width="500"
+                               Chart="chartWithoutLocation"/>
     </div>
 </div>
 
@@ -85,6 +85,42 @@ builder.Services.AddSingleton<SwissEphemeridesService>();
 }
 ```
 ![Basic Charts](.github_assets/astrology_chart_basic.png)
+
+## Can I specify the orbits to be usedß
+```razor
+@using SharpAstrology.DataModels
+@using SharpAstrology.Ephemerides
+@using SharpAstrology.BlazorComponents
+@using SharpAstrology.Enums
+@using SharpAstrology.Utility
+@rendermode InteractiveServer
+
+<PageTitle>Astrology Chart Example</PageTitle>
+
+<div style="display: flex; width: 650px; align-items: center; justify-content: center">
+         <WesternAstrologyChart Height="600" Width="600"
+                                Chart="chart"
+                                ShowOnInnerWheel="WesternChartWheelOptions.Signs"
+                                Orbits="orbits" />
+</div>
+
+@code
+{
+    [Inject] SwissEphemeridesService EphService { get; set; }
+    private AstrologyChart chart;
+    private Dictionary<Aspects, Dictionary<Planets, int>> orbits = OrbitBuilder
+        .WithWesternDefaultOrbits()
+        .SetRules(Aspects.Square, new Dictionary<Planets, int>(){ { Planets.Sun, 1}, { Planets.Jupiter, 1}})
+        .Build();
+    
+    protected override void OnInitialized()
+    {
+        using var eph = EphService.CreateContext();
+        chart = new AstrologyChart(new DateTime(1988, 9, 4, 1, 15, 0, DateTimeKind.Utc), eph, 51.0, 11.0);
+    }
+}
+```
+![Chart with defined orbits](.github_assets/astrology_chart_orbits.png)
 
 ## How can I display a chart with transits?
 ```razor
