@@ -8,8 +8,8 @@ public partial class WesternAstrologyChart
 {
     private (Dictionary<Planets, double> outerDegrees, Dictionary<Planets, double> innerDegrees) _calculateObjectsDisplayPosition(IDictionary<Planets, PlanetPosition> planetPositions)
     {
-        var outerOrbit = new OrbitOfPlanets(planetPositions);
-        var innerOrbit = new OrbitOfPlanets();
+        var outerOrbit = new RingOfPlanets(planetPositions);
+        var innerOrbit = new RingOfPlanets();
         const double orbit = 4.0;
         var first = outerOrbit.GetFirst();
         var current = first;
@@ -38,8 +38,8 @@ public partial class WesternAstrologyChart
     }
     private (Dictionary<Planets, double> outerDegrees, Dictionary<Planets, double> innerDegrees) _calculateObjectsDisplayPosition(AstrologyChart chart)
     {
-        var outerOrbit = new OrbitOfPlanets(chart);
-        var innerOrbit = new OrbitOfPlanets();
+        var outerOrbit = new RingOfPlanets(chart);
+        var innerOrbit = new RingOfPlanets();
         const double orbit = 4.0;
         var first = outerOrbit.GetFirst();
         var current = first;

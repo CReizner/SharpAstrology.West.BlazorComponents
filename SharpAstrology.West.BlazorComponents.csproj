@@ -33,7 +33,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4"/>
-        <PackageReference Include="SharpAstrology.West" Version="*-*" />
+        <PackageReference Include="SharpAstrology.West" Version="0.1.0-preview.4" />
     </ItemGroup>
 
     <ItemGroup>
